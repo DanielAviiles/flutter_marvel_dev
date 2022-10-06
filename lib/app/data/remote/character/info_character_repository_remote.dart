@@ -27,7 +27,9 @@ class InfoCharacterRepositoryRemoteImpl implements InfoCharacterRepository {
       ParamsRequestModel modelParams) async {
     try {
       String endPoint = '${ApiRouteConfig.baseUrl}/characters?limit=10';
-      if (modelParams.name.isNotEmpty) endPoint += '&name=${modelParams.name}';
+      if (modelParams.name.isNotEmpty) {
+        endPoint += '&name=${modelParams.name.replaceAll(RegExp(r' '), '%20')}';
+      }
       endPoint +=
           '&offset=${modelParams.offset}&apikey=${ApiRouteConfig.publicApiKey}&ts=1';
       endPoint += '&hash=${ApiRouteConfig.hashConf}';

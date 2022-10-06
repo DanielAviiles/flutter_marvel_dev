@@ -17,6 +17,7 @@ class HomeBloc extends Cubit<HomeState> {
   GenericFieldBloc<List<InfoCharacterDom>> listDom =
       GenericFieldBloc<List<InfoCharacterDom>>(
           defaultValue: <InfoCharacterDom>[]);
+  ValueNotifier<bool> loadingElements = ValueNotifier<bool>(false);
   ParamsRequestModel modelParams = ParamsRequestModel();
 
   // =================================================================
@@ -49,10 +50,12 @@ class HomeBloc extends Cubit<HomeState> {
   }
 
   Future<void> infiniteScrollCharacters() async {
-    offset += 1;
+    offset += 10;
+    loadingElements.value = true;
     modelParams = modelParams.copyWith(offset: offset);
-    final tempNewList = await executeGetInfoCharacters();
-    listDom.value!.addAll(tempNewList);
+    final loadElements = await executeGetInfoCharacters();
+    loadingElements.value = false;
+    listDom.value!.addAll(loadElements);
     listDom.sink(listDom.value);
   }
 

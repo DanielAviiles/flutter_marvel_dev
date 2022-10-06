@@ -5,6 +5,7 @@ import 'package:flutter_marvel_dev/app/modules/home/ui/bloc/home_bloc.dart';
 import 'package:flutter_marvel_dev/app/modules/home/ui/bloc/home_state.dart';
 import 'package:flutter_marvel_dev/app/modules/home/ui/widgets/card_hero_widget.dart';
 import 'package:flutter_marvel_dev/app/modules/home/ui/widgets/show_error_msg_widget.dart';
+import 'package:flutter_marvel_dev/app/routes/app_routes.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intrinsic_grid_view/intrinsic_grid_view.dart';
 
@@ -43,7 +44,12 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.star)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined))
+          IconButton(
+            icon: const Icon(Icons.search_outlined),
+            onPressed: () {
+              Navigator.pushNamed(context, AppRoutes.searchHero);
+            },
+          )
         ],
       ),
       body: BlocListener<HomeBloc, HomeState>(
@@ -84,17 +90,32 @@ class _HomePageState extends State<HomePage> {
       stream: homeBloc.listDom.stream,
       builder: (context, snapshot) {
         if (!snapshot.hasData) return const SizedBox();
-        return SingleChildScrollView(
-          controller: scrollController,
-          child: IntrinsicGridView.vertical(
-            padding: EdgeInsets.all(12).copyWith(top: 16),
-            verticalSpace: 10,
-            horizontalSpace: 10,
-            children: [
-              for (final character in snapshot.data!)
-                CardHeroWidget(character: character),
-            ],
-          ),
+        return Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                controller: scrollController,
+                child: IntrinsicGridView.vertical(
+                  padding: EdgeInsets.all(12).copyWith(top: 16),
+                  verticalSpace: 10,
+                  horizontalSpace: 10,
+                  children: [
+                    for (final character in snapshot.data!)
+                      CardHeroWidget(character: character),
+                  ],
+                ),
+              ),
+            ),
+            ValueListenableBuilder<bool>(
+              valueListenable: homeBloc.loadingElements,
+              builder: (context, value, child) => Visibility(
+                  visible: value,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Center(child: CircularProgressIndicator()),
+                  )),
+            )
+          ],
         );
       },
     );
