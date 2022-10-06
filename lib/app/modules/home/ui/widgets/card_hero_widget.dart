@@ -27,6 +27,8 @@ class CardHeroWidget extends StatelessWidget {
               fit: BoxFit.cover,
               width: double.infinity,
               height: 120,
+              errorBuilder: (ctx, error, _) =>
+                Icon(Icons.image_not_supported_sharp),
             ),
           ),
           Padding(
