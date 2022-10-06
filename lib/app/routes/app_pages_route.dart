@@ -4,6 +4,8 @@ import 'package:flutter_marvel_dev/app/di/injection.dart';
 import 'package:flutter_marvel_dev/app/modules/home/application/querys/get_characters_usecase.dart';
 import 'package:flutter_marvel_dev/app/modules/home/ui/bloc/home_bloc.dart';
 import 'package:flutter_marvel_dev/app/modules/home/ui/home_page.dart';
+import 'package:flutter_marvel_dev/app/modules/search/ui/bloc/search_bloc.dart';
+import 'package:flutter_marvel_dev/app/modules/search/ui/search_page.dart';
 import 'package:flutter_marvel_dev/app/routes/app_routes.dart';
 
 mixin AppPagesRoute {
@@ -19,6 +21,23 @@ mixin AppPagesRoute {
               )
             ],
             child: const HomePage(),
+          ),
+      AppRoutes.searchHero: (BuildContext context) => MultiBlocProvider(
+            providers: [
+              BlocProvider<HomeBloc>(
+                child: const HomePage(),
+                create: (context) => HomeBloc(
+                  getCharactersUseCase: getItApp<GetCharactersUseCase>(),
+                ),
+              ),
+              BlocProvider<SearchBloc>(
+                child: const SearchPage(),
+                create: (context) => SearchBloc(
+                  getCharactersUseCase: getItApp<GetCharactersUseCase>(),
+                ),
+              )
+            ],
+            child: const SearchPage(),
           ),
     };
   }
