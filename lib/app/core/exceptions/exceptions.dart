@@ -1,5 +1,5 @@
 import 'package:flutter_marvel_dev/app/core/utils/json_utils.dart';
-import 'package:flutter_marvel_dev/app/data/models/error_api.dart';
+import 'package:flutter_marvel_dev/app/data/models/errorapi/error_api.dart';
 
 class ApiException implements Exception {
   ApiException(

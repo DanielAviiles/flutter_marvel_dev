@@ -1,4 +1,4 @@
-import 'package:flutter_marvel_dev/app/data/models/common_api.dart';
+import 'package:flutter_marvel_dev/app/data/models/commonapi/common_api.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'api_global_model.g.dart';

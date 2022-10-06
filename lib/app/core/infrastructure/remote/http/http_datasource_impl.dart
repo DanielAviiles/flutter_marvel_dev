@@ -8,7 +8,7 @@ import 'package:flutter_marvel_dev/app/core/exceptions/exceptions.dart';
 import 'package:flutter_marvel_dev/app/core/infrastructure/remote_datasource.dart';
 import 'package:flutter_marvel_dev/app/core/infrastructure/remote_datasource_types.dart';
 import 'package:flutter_marvel_dev/app/core/utils/json_utils.dart';
-import 'package:flutter_marvel_dev/app/data/models/response_api.dart';
+import 'package:flutter_marvel_dev/app/data/models/reponseapi/response_api.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 

@@ -1,4 +1,4 @@
-import 'package:flutter_marvel_dev/app/data/models/response_api.dart';
+import 'package:flutter_marvel_dev/app/data/models/reponseapi/response_api.dart';
 
 abstract class RemoteDataSource {
   Future<ResponseApi> get(

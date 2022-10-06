@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-import 'package:flutter_marvel_dev/app/data/models/response_global.dart';
+import 'package:flutter_marvel_dev/app/data/models/reponseapi/response_global.dart';
 
 class ResponseApi extends ResponseGlobal<dynamic> {
   ResponseApi({

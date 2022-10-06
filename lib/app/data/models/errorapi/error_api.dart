@@ -1,6 +1,5 @@
+import 'package:flutter_marvel_dev/app/data/models/commonapi/common_api.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import 'common_api.dart';
 
 part 'error_api.g.dart';
 
