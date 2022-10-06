@@ -10,6 +10,7 @@ import 'package:flutter_marvel_dev/app/core/infrastructure/remote_datasource.dar
 import 'package:flutter_marvel_dev/app/core/infrastructure/remote_datasource_types.dart';
 import 'package:flutter_marvel_dev/app/core/models/api_global_model.dart';
 import 'package:flutter_marvel_dev/app/data/models/character/character_model.dart';
+import 'package:flutter_marvel_dev/app/data/models/params_request/params_request_model.dart';
 import 'package:flutter_marvel_dev/app/modules/home/domain/models/info_character_dom.dart';
 import 'package:flutter_marvel_dev/app/modules/home/domain/repository/info_character_repository.dart';
 import 'package:injectable/injectable.dart';
@@ -22,19 +23,15 @@ class InfoCharacterRepositoryRemoteImpl implements InfoCharacterRepository {
   final RemoteDataSource _api;
 
   @override
-  Future<Either<Failure, InfoCharacterDom>>? getCharacter(String nameHero) {
-    throw UnimplementedError();
-  }
-
-  @override
   Future<Either<Failure, List<InfoCharacterDom>>>? getCharacters(
-      {int offset = 0}) async {
+      ParamsRequestModel modelParams) async {
     try {
-      final response = await _api.get(
-        enpoint:
-            '${ApiRouteConfig.baseUrl}/characters?limit=10&offset=$offset&apikey=${ApiRouteConfig.publicApiKey}&ts=1&hash=${ApiRouteConfig.hashConf}',
-        timeOutSec: 5,
-      );
+      String endPoint = '${ApiRouteConfig.baseUrl}/characters?limit=10';
+      if (modelParams.name.isNotEmpty) endPoint += '&name=${modelParams.name}';
+      endPoint +=
+          '&offset=${modelParams.offset}&apikey=${ApiRouteConfig.publicApiKey}&ts=1';
+      endPoint += '&hash=${ApiRouteConfig.hashConf}';
+      final response = await _api.get(enpoint: endPoint, timeOutSec: 5);
       if (response.body != null) {
         final apiGlobalModel = ApiGlobalModel.fromJson(response.body!);
         final listCharacterModel =
