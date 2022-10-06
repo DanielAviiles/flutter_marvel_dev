@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_marvel_dev/app/core/api/api_route_config.dart';
+import 'package:flutter_marvel_dev/app/routes/app_pages_route.dart';
+import 'package:flutter_marvel_dev/app/routes/app_routes.dart';
+import '/app/di/injection.dart' as di;
 
-void main() {
-  runApp(MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  di.configureAppInjection();
+  await ApiRouteConfig.loadEnviroments();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,9 +23,8 @@ class MyApp extends StatelessWidget {
           appBarTheme: const AppBarTheme(
         color: Colors.red,
       )),
-      home: Scaffold(
-        body: Center(child: Text('Hola mundo')),
-      ),
+      routes: AppPagesRoute.getRoutes(),
+      initialRoute: AppRoutes.home,
     );
   }
 }

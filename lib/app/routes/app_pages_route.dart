@@ -1,47 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_marvel_dev/app/di/injection.dart';
+import 'package:flutter_marvel_dev/app/modules/home/application/querys/get_characters_usecase.dart';
+import 'package:flutter_marvel_dev/app/modules/home/ui/bloc/home_bloc.dart';
+import 'package:flutter_marvel_dev/app/modules/home/ui/home_page.dart';
+import 'package:flutter_marvel_dev/app/routes/app_routes.dart';
 
 mixin AppPagesRoute {
   static Map<String, Widget Function(BuildContext)> getRoutes() {
     return <String, Widget Function(BuildContext)>{
-      /* AppRoutes.home: (BuildContext context) => MultiBlocProvider(
+      AppRoutes.home: (BuildContext context) => MultiBlocProvider(
             providers: [
-              BlocProvider<MovieNowPLayingBloc>(
+              BlocProvider<HomeBloc>(
                 child: const HomePage(),
-                create: (context) => MovieNowPLayingBloc(
-                  moviesRemoteUseCase: getItApp<GetMoviesRemoteUsecase>(),
+                create: (context) => HomeBloc(
+                  getCharactersUseCase: getItApp<GetCharactersUseCase>(),
                 ),
-              ),
-              BlocProvider<MoviePopularBloc>(
-                child: const HomePage(),
-                create: (context) => MoviePopularBloc(
-                  moviesPopularsRemoteUsecase:
-                      getItApp<GetMoviesPopularsRemoteUsecase>(),
-                ),
-              ),
-              BlocProvider<MovieSearchedBloc>(
-                child: const HomePage(),
-                create: (context) => MovieSearchedBloc(
-                  searchMovieRemoteUsecase:
-                      getItApp<GetSearchMovieRemoteUsecase>(),
-                ),
-              ),
-              /* BlocProvider<MovieSearchedBloc>(
-                child: MovieSearchDelegate(),
-                create: (context) => MovieSearchedBloc(
-                  searchMovieRemoteUsecase:
-                      getItApp<GetSearchMovieRemoteUsecase>(),
-                ),
-              ) */
+              )
             ],
             child: const HomePage(),
           ),
-      AppRoutes.details: (BuildContext context) =>
-          BlocProvider<DetailMovieBloc>(
-            child: const DetailPage(),
-            create: (context) => DetailMovieBloc(
-                castMovieRemoteUseCase: getItApp<GetCastMovieRemoteUsecase>()),
-          ), */
     };
   }
 

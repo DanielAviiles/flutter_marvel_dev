@@ -9,7 +9,7 @@ class CharacterModel {
     this.descriptionHero,
     this.dateModified,
     this.collectionComics,
-    required this.imgsUrl,
+    required this.thumbnail,
   });
 
   @JsonKey()
@@ -21,8 +21,8 @@ class CharacterModel {
   @JsonKey(name: 'description')
   final String? descriptionHero;
 
-  @JsonKey(name: 'images')
-  final String imgsUrl;
+  @JsonKey()
+  final Map<String, dynamic> thumbnail;
 
   @JsonKey(name: 'modified')
   final DateTime? dateModified;
@@ -30,13 +30,18 @@ class CharacterModel {
   @JsonKey(name: 'comics')
   final Map<String, dynamic>? collectionComics;
 
+  String get urlImg =>
+      '${this.thumbnail["path"]}.${this.thumbnail["extension"]}';
+  
+  String get urlReleatedComics => '${collectionComics?["collectionURI"]}';
+
   CharacterModel copyWith({
     int? id,
     String? nameHero,
     String? descriptionHero,
     DateTime? dateModified,
     Map<String, dynamic>? collectionComics,
-    String? imgsUrl,
+    Map<String, dynamic>? thumbnail,
   }) =>
       CharacterModel(
         id: id ?? this.id,
@@ -44,8 +49,15 @@ class CharacterModel {
         descriptionHero: descriptionHero ?? this.descriptionHero,
         dateModified: dateModified ?? this.dateModified,
         collectionComics: collectionComics ?? this.collectionComics,
-        imgsUrl: imgsUrl ?? this.imgsUrl,
+        thumbnail: thumbnail ?? this.thumbnail,
       );
+
+  static List<CharacterModel> listFromJson(List<dynamic> list) {
+    final List<CharacterModel> listModels = list
+        .map((dynamic e) => CharacterModel.fromJson(e as Map<String, dynamic>))
+        .toList();
+    return listModels;
+  }
 
   factory CharacterModel.fromJson(Map<String, dynamic> json) =>
       _$CharacterModelFromJson(json);
