@@ -8,38 +8,48 @@ class ComicModel {
     required this.titleComic,
     this.dateModified,
     this.descriptionComic,
-    this.resourceUri,
+    required this.thumbnail,
   });
 
   @JsonKey()
   final int id;
 
-  @JsonKey()
+  @JsonKey(name: 'title')
   final String titleComic;
 
-  @JsonKey()
+  @JsonKey(name: 'description')
   final String? descriptionComic;
 
-  @JsonKey()
+  @JsonKey(name: 'modified')
   final DateTime? dateModified;
 
   @JsonKey()
-  final String? resourceUri;
+  final Map<String, dynamic> thumbnail;
+
+  String get urlImg =>
+      '${this.thumbnail["path"]}.${this.thumbnail["extension"]}';
 
   ComicModel copyWith({
     int? id,
     String? titleComic,
     DateTime? dateModified,
     String? descriptionComic,
-    String? resourceUri,
+    Map<String, dynamic>? thumbnail,
   }) =>
       ComicModel(
         id: id ?? this.id,
         titleComic: titleComic ?? this.titleComic,
         dateModified: dateModified ?? this.dateModified,
         descriptionComic: descriptionComic ?? this.descriptionComic,
-        resourceUri: resourceUri ?? this.resourceUri,
+        thumbnail: thumbnail ?? this.thumbnail,
       );
+
+  static List<ComicModel> listFromJson(List<dynamic> list) {
+    final List<ComicModel> listModels = list
+        .map((dynamic e) => ComicModel.fromJson(e as Map<String, dynamic>))
+        .toList();
+    return listModels;
+  }
 
   factory ComicModel.fromJson(Map<String, dynamic> json) =>
       _$ComicModelFromJson(json);
