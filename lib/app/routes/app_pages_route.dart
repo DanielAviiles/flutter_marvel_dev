@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_marvel_dev/app/di/injection.dart';
+import 'package:flutter_marvel_dev/app/modules/detail_character/application/querys/get_comics_of_character_usecase.dart';
+import 'package:flutter_marvel_dev/app/modules/detail_character/ui/bloc/detail_character_bloc.dart';
+import 'package:flutter_marvel_dev/app/modules/detail_character/ui/detail_character_page.dart';
 import 'package:flutter_marvel_dev/app/modules/home/application/querys/get_characters_usecase.dart';
 import 'package:flutter_marvel_dev/app/modules/home/ui/bloc/home_bloc.dart';
 import 'package:flutter_marvel_dev/app/modules/home/ui/home_page.dart';
@@ -11,33 +14,25 @@ import 'package:flutter_marvel_dev/app/routes/app_routes.dart';
 mixin AppPagesRoute {
   static Map<String, Widget Function(BuildContext)> getRoutes() {
     return <String, Widget Function(BuildContext)>{
-      AppRoutes.home: (BuildContext context) => MultiBlocProvider(
-            providers: [
-              BlocProvider<HomeBloc>(
-                child: const HomePage(),
-                create: (context) => HomeBloc(
-                  getCharactersUseCase: getItApp<GetCharactersUseCase>(),
-                ),
-              )
-            ],
+      AppRoutes.home: (BuildContext context) => BlocProvider<HomeBloc>(
             child: const HomePage(),
+            create: (context) => HomeBloc(
+              getCharactersUseCase: getItApp<GetCharactersUseCase>(),
+            ),
           ),
-      AppRoutes.searchHero: (BuildContext context) => MultiBlocProvider(
-            providers: [
-              BlocProvider<HomeBloc>(
-                child: const HomePage(),
-                create: (context) => HomeBloc(
-                  getCharactersUseCase: getItApp<GetCharactersUseCase>(),
-                ),
-              ),
-              BlocProvider<SearchBloc>(
-                child: const SearchPage(),
-                create: (context) => SearchBloc(
-                  getCharactersUseCase: getItApp<GetCharactersUseCase>(),
-                ),
-              )
-            ],
+      AppRoutes.searchHero: (BuildContext context) => BlocProvider<SearchBloc>(
             child: const SearchPage(),
+            create: (context) => SearchBloc(
+              getCharactersUseCase: getItApp<GetCharactersUseCase>(),
+            ),
+          ),
+      AppRoutes.detailCharacter: (BuildContext context) =>
+          BlocProvider<DetailCharacterBloc>(
+            child: const DetailCharacterPage(),
+            create: (context) => DetailCharacterBloc(
+              getComicsOfCharacterUseCase:
+                  getItApp<GetComicsOfCharacterUseCase>(),
+            ),
           ),
     };
   }
