@@ -78,7 +78,9 @@ class _SearchPageState extends State<SearchPage> {
             } else if (state is SearchLoadingState) {
               return Center(child: CircularProgressIndicator());
             } else if (state is SearchErrorState) {
-              return ShowErrorMsgWidget();
+              return ShowErrorMsgWidget(onRefresh: () async {
+                await searchBloc.pullToRefresh(value: controller.text);
+              });
             } else if (state is SearchSuccessState) {
               return _renderFindCharacters(context, searchBloc);
             } else {

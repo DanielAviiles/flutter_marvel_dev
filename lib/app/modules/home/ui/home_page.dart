@@ -73,7 +73,9 @@ class _HomePageState extends State<HomePage> {
             } else if (state is HomeLoadingState) {
               return Center(child: CircularProgressIndicator());
             } else if (state is HomeErrorState) {
-              return ShowErrorMsgWidget();
+              return ShowErrorMsgWidget(onRefresh: () async {
+                await homeBloc.init();
+              });
             } else if (state is HomeSuccessState) {
               return _renderViewCharacters(context, homeBloc);
             } else {

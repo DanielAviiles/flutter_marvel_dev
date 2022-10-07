@@ -19,6 +19,13 @@ class SearchBloc extends Cubit<SearchState> {
 
   // =================================================================
 
+  Future<void> pullToRefresh({String value = ''}) async {
+    emit(SearchState.loading());
+    final data = await executeSearchGetInfoCharacter(value: value);
+    listDom.sink(data);
+    if (state is! SearchErrorState) emit(SearchState.success());
+  }
+
   void emitState(SearchState state) => emit(state);
 
   void scrollControllerListener(ScrollController scrollController) async {
