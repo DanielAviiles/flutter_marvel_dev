@@ -49,7 +49,7 @@ En esta capa ya está identificada la UI, donde se implementa una estructura a b
   * nombre del modulo
     * application donde se ejecutan querys de modificación y consulta
     * domain donde se encuentra la abstración de repositorios y modelos que se implementará en casos de uso
-    *ui donde estará representa la vista
+    * ui donde estará representa la vista
 
 ### [lib/app/routes]
 Para este nivel de carpeta en el proyecto, solo está identificada y definida la proyección de
