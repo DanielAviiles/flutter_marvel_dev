@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_marvel_dev/app/modules/home/domain/models/info_character_dom.dart';
-import 'package:flutter_marvel_dev/app/routes/app_routes.dart';
 
-class CardHeroWidget extends StatelessWidget {
-  const CardHeroWidget({Key? key, required this.character}) : super(key: key);
+class CardMoreInformationHeroWidget extends StatelessWidget {
+  const CardMoreInformationHeroWidget({Key? key, required this.character})
+      : super(key: key);
 
   final InfoCharacterDom character;
 
   @override
   Widget build(BuildContext context) {
     double radius = 5.0;
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, AppRoutes.detailCharacter,
-            arguments: character);
-      },
+    return Container(
+      width: MediaQuery.of(context).size.width * .85,
+      padding: const EdgeInsets.all(20),
       child: Card(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(radius))),
@@ -30,9 +28,9 @@ class CardHeroWidget extends StatelessWidget {
               ),
               child: Image.network(
                 character.imgUrl,
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
                 width: double.infinity,
-                height: 120,
+                height: MediaQuery.of(context).size.height * .3,
                 errorBuilder: (ctx, error, _) =>
                     Icon(Icons.image_not_supported_sharp),
               ),
@@ -48,6 +46,13 @@ class CardHeroWidget extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8).copyWith(right: 4),
+              child: Center(
+                  child: Text(character.description.isEmpty
+                      ? 'No description'
+                      : character.description)),
             ),
           ],
         ),
